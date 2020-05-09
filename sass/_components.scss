@@ -2,34 +2,129 @@
 //LOGO
 .logo {
   height: 3.25rem;
+  margin-left: 3.5rem;
+  @media only screen and (max-width: $bp-small) {
+    margin-left: 0.5rem;
+  }
 }
 //////////////////////////////////////
 // SEARCH
 .search {
   // margin: 0 auto;
-  background-color: orangered;
-  flex: 0 0 60%;
-  &__input {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: $bp-smallest) {
+    order: 1;
+    flex: 0 0 100%;
+    background-color: var(--color-grey-light-2);
   }
+  &__input {
+    font-family: inherit;
+    font-style: inherit;
+    color: inherit;
+    background-color: var(--color-grey-light-2);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 100px;
+    margin-right: -3.5rem;
+    width: 90%;
+    transition: all 0.2s;
+
+    &:focus {
+      width: 100%;
+      outline: none;
+      background-color: var(--color-grey-light-3);
+    }
+
+    &::placeholder {
+      font-weight: 100;
+      color: var(--color-grey-dark-1);
+    }
+
+    //////////////////////////////////////
+    ///// My solution
+
+    //START: my solution to having the magnifying glass conntected to the search bar as if it is indide it.
+    // border-top-left-radius: 100px;
+    // border-bottom-left-radius: 100px;
+    //END:
+
+    //////////////////////////////////////
+  }
+
+  &__input:focus + &__button {
+    background-color: var(--color-grey-light-3);
+  }
+
   &__button {
+    border: none;
+    background-color: var(--color-grey-light-2);
+    transition: all 0.2s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      transform: scale(1.2);
+      outline: 0;
+
+      // background-color: var(--color-grey-dark-3);
+    }
+    //////////////////////////////////////
+    ///// My solution
+    //START: my solution to having the magnifying glass conntected to the search bar as if it is indide it.
+    // border-top-right-radius: 100px;
+    // border-bottom-right-radius: 100px;
+    //END:
+    /////////////////////////////////////
   }
   &__icon {
     height: 2rem;
     width: 2rem;
+    fill: var(--color-grey-dark-3);
   }
 }
 //////////////////////////////////////
 // USER NAVIGATION
 .user-nav {
-  background-color: greenyellow;
   display: flex;
+  align-items: stretch;
+  align-self: stretch;
+
+  & > * {
+    padding: 0 2rem;
+    @media only screen and (max-width: $bp-small) {
+      // padding: 0 1.5rem;
+    }
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    &:hover {
+      background-color: var(--color-grey-light-2);
+    }
+  }
+
   &__icon-box {
+    // height: 100%;
+    position: relative;
   }
   &__icon {
     height: 2.25rem;
     width: 2.25rem;
+    fill: var(--color-grey-dark-2);
   }
   &__notification {
+    height: 1.75rem;
+    width: 1.75rem;
+    font-size: 1.2rem;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    background-color: var(--color-primary);
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
   }
   &__user {
   }
@@ -38,5 +133,442 @@
     border-radius: 50%;
   }
   &__user-name {
+    margin-left: 1rem;
   }
 }
+
+//////////////////////////////////////
+// SIDE NAVIGATION
+.side-nav {
+  font-size: 1.75rem;
+  list-style: none;
+  margin-top: 3.5rem;
+  @media only screen and (max-width: $bp-medium) {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    // align-items: center;
+  }
+  &__item {
+    // margin: 5rem 0;
+    position: relative;
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+    @media only screen and (max-width: $bp-medium) {
+      flex: 1;
+      // text-align: center;
+      &:not(:last-child) {
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+      }
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      // top: 0;
+      // left: 0;
+      // we cannot use height for increasing the height animation because it doesn'nt increase from the center
+      //NOTE: by using scale we can start the animation of increasing height on both sides, compared to height which increases from one side
+      // NOTE: this is because the transform-origin property is set to center
+      // height: 0;
+      height: 100%;
+      width: 3px;
+      background-color: var(--color-primary);
+      transform: scaleY(0);
+      // this transform firts run the transition in the scaleY after a delay of .2s the next transition of width is executed, this whole transition takes place in .4s .
+      transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+        background-color 0.1s;
+    }
+    &:hover::before {
+      transform: scaleY(1);
+      // height: 100%;
+      width: 100%;
+    }
+    &--active::before {
+      transform: scaleY(1);
+      width: 100%;
+    }
+
+    &:active::before {
+      background-color: var(--color-primary-light);
+    }
+  }
+
+  &__link:link,
+  &__link:visited {
+    text-decoration: none;
+    color: var(--color-grey-light-1);
+    text-transform: uppercase;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.5rem;
+    }
+
+    // text-align: center;
+    @media only screen and (max-width: $bp-medium) {
+      justify-content: center;
+      padding: 2rem;
+    }
+    @media only screen and (max-width: $bp-small) {
+      flex-direction: column;
+      padding: 1.5rem 0.5rem;
+    }
+  }
+  &__icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 2rem;
+    fill: currentColor;
+
+    @media only screen and (max-width: $bp-small) {
+      margin: 0;
+      margin-bottom: 0.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+.legal {
+  font-size: 1.4rem;
+  color: var(--color-grey-light-4);
+  text-align: center;
+  padding: 2.5rem;
+  @media only screen and (max-width: $bp-medium) {
+    display: none;
+  }
+}
+
+//////////////////////////////////////
+// GALLERY
+.gallery {
+  display: flex;
+  // width: 100%;
+  &__photo {
+    // height: 100%;
+    width: 100%;
+    // we use display block here as the inline introduces an line
+    display: block;
+  }
+  &__item {
+    // height: 100%;
+    // position: relative;
+  }
+}
+
+//////////////////////////////////////
+// HOTEL OVERVIEW
+.overview {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-grey-light-2);
+  &__heading {
+    text-transform: uppercase;
+    font-size: 2.25rem;
+    font-weight: 300;
+    padding: 1.5rem 3rem;
+    letter-spacing: 1px;
+    @media only screen and (max-width: $bp-small) {
+      font-size: 1.8rem;
+      padding: 1rem 2rem;
+    }
+  }
+  &__stars {
+    margin-right: auto;
+    // the stars are not centered because inlline elements have some line-height
+    // browser by default add line-height of 1.6 to inlline elements we can manually overide it
+    // line-height: 0;
+    // better solution is making the parent element flex so children become flex-items
+    display: flex;
+  }
+  &__icon-star,
+  &__icon-location {
+    width: 1.75rem;
+    height: 1.75rem;
+    fill: var(--color-primary);
+  }
+
+  &__icon-location {
+    margin-right: 0.5rem;
+  }
+  &__location {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+  }
+  &__rating {
+    margin-left: 3rem;
+    padding: 0 2.25rem;
+    color: white;
+    background-color: var(--color-primary);
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__rating-average {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: -3px;
+  }
+  &__rating-count {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+}
+
+.btn-inline {
+  border: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+  color: var(--color-primary);
+  font-size: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  & span {
+    margin-left: 3px;
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    color: var(--color-grey-dark-1);
+    span {
+      margin-left: 8px;
+    }
+  }
+  &:focus {
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+//////////////////////////////////////
+// PARAGRAPH
+.paragraph:not(:last-child) {
+  margin-bottom: 2rem;
+}
+//////////////////////////////////////
+
+//////////////////////////////////////
+//LIST
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 3rem 0;
+  padding: 3rem 0;
+  border: {
+    bottom: var(--line);
+    top: var(--line);
+  }
+
+  &__item {
+    flex: 0 0 50%;
+    margin-bottom: 0.75rem;
+    &::before {
+      content: '';
+      display: inline-block;
+      height: 1rem;
+      width: 1rem;
+      // Older browser
+      // background-image: url(../img/chevron-thin-right.svg);
+      // background-size: cover;
+
+      background-color: var(--color-primary);
+      mask: url(../img/chevron-thin-right.svg);
+      mask-size: cover;
+    }
+  }
+}
+//////////////////////////////////////
+//////////////////////////////////////
+// RECOMMEND
+.recommend {
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+  display: flex;
+  align-items: center;
+  &__count {
+    margin-right: auto;
+  }
+  &__friends {
+    display: flex;
+  }
+  &__photo {
+    box-sizing: content-box;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 3px solid white;
+    &:not(:last-child) {
+      margin-right: -2rem;
+    }
+  }
+}
+
+//////////////////////////////////////
+//////////////////////////////////////
+// REVIEW
+.review {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  position: relative;
+  padding: 3rem;
+  margin-bottom: 3.5rem;
+  @media only screen and (max-width: $bp-medium) {
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+  @media only screen and (max-width: $bp-small) {
+    margin-top: 3rem;
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+    margin-bottom: 0;
+  }
+  overflow: hidden;
+  &__text {
+    position: relative;
+    z-index: 10;
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    &-box {
+      margin-right: auto;
+    }
+    &-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    &-date {
+      font-size: 1rem;
+      color: var(--color-grey-dark-3);
+    }
+  }
+  &__photo {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+  }
+  &__rating {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    font-weight: 300;
+  }
+  &::before {
+    // this is the quotation mark in the review box
+    content: '\201C';
+    position: absolute;
+    top: -2.3rem;
+    left: -1rem;
+    font-size: 20rem;
+    color: var(--color-grey-light-2);
+    font-family: sans-serif;
+    z-index: 1;
+    line-height: 1;
+  }
+}
+//////////////////////////////////////
+//////////////////////////////////////
+// CTA
+.cta {
+  padding: 3.5rem 0;
+  text-align: center;
+  @media only screen and (max-width: $bp-medium) {
+    padding: 2.5rem 0;
+  }
+  &__book-now {
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.btn {
+  font-size: 1.5rem;
+  border: none;
+  text-transform: uppercase;
+  border-radius: 100px;
+  font-weight: 300;
+  color: white;
+  cursor: pointer;
+  // we are not using padding here because as the second span is greater in width than the first the width of button changes
+  // padding: 3rem 7.5rem;
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  &:hover {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-dark),
+      var(--color-primary-light)
+    );
+  }
+  position: relative;
+  // we are using overflow hidden so that the span which is outside the element is hidden
+  overflow: hidden;
+  &__visible {
+    display: inline-block;
+    // position: absolute;
+    padding: 3rem 6.55rem;
+    transition: all 0.2s;
+  }
+  &__invisible {
+    padding: 3rem 2.5rem;
+    position: absolute;
+    // color: red;
+    display: inline-block;
+    top: -100%;
+    // transform: translateY(-100%);
+    left: 0;
+    transition: all 0.2s;
+  }
+
+  &:hover &__visible {
+    // position: absolute;
+    // top: -100%;
+    transform: translateY(-100%);
+    // left: 0;
+  }
+  &:hover &__invisible {
+    top: 0;
+    // left: 0;
+  }
+  &:focus {
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
+
+//////////////////////////////////////

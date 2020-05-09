@@ -28,8 +28,15 @@ Grey dark 3: #999
   --color-grey-dark-2: #777;
   --color-grey-dark-3: #999;
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 2rem 5rem rgba($color: #000000, $alpha: 0.6);
+  --line: 1px solid var(--color-grey-light-2);
 }
 
+$bp-largest: 75em; // 1200px
+$bp-large: 68.75em; // 1100px
+$bp-medium: 56.25em; // 900px
+$bp-small: 37.5rem; //600px
+$bp-smallest: 31.25rem; //500px
 * {
   margin: 0;
   padding: 0;
@@ -47,6 +54,9 @@ html {
   font-family: 'Open Sans', sans-serif;
   line-height: 1.6;
   font-weight: 400;
+  @media screen {
+    font-size: 50%;
+  }
 }
 body {
   background-image: linear-gradient(
@@ -58,5 +68,5 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 
-  min-height: 100vh;
+  // min-height: 100vh;
 }
